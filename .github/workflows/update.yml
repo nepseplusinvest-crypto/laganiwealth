@@ -12,11 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
-      - run: pip install requests
-      - run: python fetch.py
-      - run: |
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Run script
+        run: python fetch.py
+
+      - name: Commit data
+        run: |
           git config --global user.name "bot"
           git config --global user.email "bot@mail.com"
           git add data.json
-          git commit -m "update"
+          git commit -m "auto update" || echo "no change"
           git push
