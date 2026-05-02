@@ -1,0 +1,22 @@
+name: Update Data
+
+on:
+  schedule:
+    - cron: '45 9 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+      - run: pip install requests
+      - run: python fetch.py
+      - run: |
+          git config --global user.name "bot"
+          git config --global user.email "bot@mail.com"
+          git add data.json
+          git commit -m "update"
+          git push
