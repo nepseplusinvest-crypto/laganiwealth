@@ -10,8 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
       - name: Install requests
         run: pip install requests
@@ -19,10 +24,10 @@ jobs:
       - name: Run script
         run: python fetch.py
 
-      - name: Commit data
+      - name: Commit file
         run: |
           git config --global user.name "bot"
           git config --global user.email "bot@mail.com"
           git add data.json
-          git commit -m "auto update" || echo "no change"
+          git commit -m "update data" || echo "no changes"
           git push
